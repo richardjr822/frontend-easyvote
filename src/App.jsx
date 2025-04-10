@@ -1,24 +1,42 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AdminPage from "./pages/admin/admin"; // Adjust the path if necessary
-import Login from "./pages/login"; // Example: Login page
-import Create from "./components/Create"; // Import Create page
-import Tally from "./components/Tally"; // Import Tally page
-import Accounts from "./components/Accounts"; // Import Accounts page
-import Archives from "./components/Archives"; // Import Archives page
-import AdminSidebar from "./components/AdminSidebar"; // Import AdminSidebar
-import ViewCandidate from "./components/ViewCandidate"; // Import ViewCandidate
+import AdminPage from "./pages/admin/admin"; 
+import Login from "./pages/login";
+import Create from "./components/Create";
+import Tally from "./components/Tally";
+import Accounts from "./components/Accounts";
+import Archives from "./components/Archives";
+import AdminSidebar from "./components/AdminSidebar";
+import ViewCandidate from "./components/ViewCandidate";
+import Voter from "./pages/voter/voter";
+
+// Import voter components
+import VoterSidebar from "./components/voter/VoterSidebar";
+import VoterHeader from "./components/voter/voterHeader";
+import Candidates from "./components/voter/Candidates";
+import VoterDashboard from "./components/voter/voterDashboard";
+import VotingInterface from "./components/voter/votingInterface";
 
 // AdminLayout Component
 const AdminLayout = ({ children }) => {
   return (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
       <div className="d-flex flex-grow-1">
-        {/* Sidebar */}
         <AdminSidebar />
         {/* Main Content */}
         <div className="flex-grow-1">{children}</div>
       </div>
+    </div>
+  );
+};
+
+// VoterLayout Component
+const VoterLayout = ({ children }) => {
+  return (
+    <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
+      <VoterSidebar />
+      <VoterHeader />
+      <div className="flex-grow-1">{children}</div>
     </div>
   );
 };
@@ -29,6 +47,28 @@ const App = () => {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Login />} />
+        
+        {/* Voter Routes */}
+        <Route
+          path="/voter"
+          element={
+            <VoterLayout>
+              <VoterDashboard />
+            </VoterLayout>
+          }
+        />
+        <Route
+          path="/candidates"
+          element={
+            <VoterLayout>
+              <Candidates />
+            </VoterLayout>
+          }
+        />
+        <Route
+          path="/voting-interface/:electionId"
+          element={<VotingInterface />}
+        />
 
         {/* Admin Routes */}
         <Route

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
-const Header = ({ username = "Admin" }) => {
+const VoterHeader = ({ username = "Voter" }) => {
   const location = useLocation();
 
   // State to store the current date and time
@@ -20,18 +20,14 @@ const Header = ({ username = "Admin" }) => {
   // Map routes to titles with icons or badges
   const getTitle = () => {
     switch (location.pathname) {
-      case "/admin":
-        return "Admin Dashboard";
-      case "/create":
-        return "Create";
-      case "/tally":
-        return "Tally";
-      case "/accounts":
-        return "Accounts";
-      case "/archives":
-        return "Archives";
+      case "/voter":
+        return "Student Elections";
+      case "/view-candidates":
+        return "View Candidates";
+      case "/voting-interface":
+        return "Cast Your Vote";
       default:
-        return "Admin Dashboard";
+        return "Student Elections";
     }
   };
 
@@ -49,10 +45,10 @@ const Header = ({ username = "Admin" }) => {
   });
 
   return (
-    <header className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 py-6 px-6 shadow-md border-b border-gray-300 flex justify-between items-center transition-all duration-300">
+    <header className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 py-6 px-6 shadow-md border-b border-gray-300 flex justify-between items-center transition-all duration-300 ml-[250px]">
       {/* Title Section */}
       <div className="flex items-center">
-        <h1 className="text-xl font-bold ml-60 flex items-center">
+        <h1 className="text-xl font-bold flex items-center">
           <span className="bg-gradient-to-r from-orange-500 to-orange-600 h-6 w-1.5 rounded-full mr-3"></span>
           <span className="text-gray-800 tracking-wide">
             {getTitle()}
@@ -79,4 +75,4 @@ const Header = ({ username = "Admin" }) => {
   );
 };
 
-export default Header;
+export default VoterHeader;

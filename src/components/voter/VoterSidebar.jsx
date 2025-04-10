@@ -1,8 +1,8 @@
 import React from "react";
-import { FaUserCircle, FaHome, FaUserPlus, FaClipboardList, FaUsers, FaArchive, FaSignOutAlt } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { FaUserCircle, FaHome, FaClipboardList, FaSignOutAlt } from "react-icons/fa";
+import { useLocation, Link } from "react-router-dom";
 
-const AdminSidebar = () => {
+const VoterSidebar = () => {
   const location = useLocation();
 
   return (
@@ -19,7 +19,7 @@ const AdminSidebar = () => {
       {/* User Info Section */}
       <div className="flex flex-col items-center relative z-10 pt-6">
         <div className="relative">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center shadow-lg">
             <FaUserCircle className="text-white text-5xl" />
           </div>
           <div className="absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full border-2 border-orange-500 flex items-center justify-center shadow-md">
@@ -28,7 +28,7 @@ const AdminSidebar = () => {
         </div>
         <h3 className="mt-4 text-gray-800 font-semibold">John Doe</h3>
         <span className="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-medium mt-1">
-          Administrator
+          Voter
         </span>
       </div>
 
@@ -37,52 +37,29 @@ const AdminSidebar = () => {
         <p className="text-xs font-semibold text-gray-400 mb-2 px-4">MENU</p>
         
         <MenuItem 
-          to="/admin"
+          to="/voter"
           icon={FaHome}
           label="Home"
-          isActive={location.pathname === "/admin"}
+          isActive={location.pathname === "/voter"}
         />
         
         <MenuItem 
-          to="/create"
-          icon={FaUserPlus}
-          label="Create"
-          isActive={location.pathname === "/create"}
-        />
-        
-        <MenuItem 
-          to="/tally"
+          to="/candidates"
           icon={FaClipboardList}
-          label="Tally"
-          isActive={location.pathname === "/tally"}
-        />
-        
-        <p className="text-xs font-semibold text-gray-400 mt-6 mb-2 px-4">MANAGEMENT</p>
-        
-        <MenuItem 
-          to="/accounts"
-          icon={FaUsers}
-          label="Accounts"
-          isActive={location.pathname === "/accounts"}
-        />
-        
-        <MenuItem 
-          to="/archives"
-          icon={FaArchive}
-          label="Archives"
-          isActive={location.pathname === "/archives"}
+          label="View Candidates"
+          isActive={location.pathname === "/candidates"}
         />
       </nav>
 
       {/* Logout Button */}
       <div className="mt-6 flex justify-center relative z-10">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="bg-gray-100 hover:bg-orange-50 text-gray-700 hover:text-orange-600 w-full py-3 px-4 rounded-xl flex items-center justify-center transition-all duration-200 group"
         >
           <FaSignOutAlt className="mr-2 text-orange-500 group-hover:rotate-90 transition-transform duration-300" />
           <span className="font-medium">Logout</span>
-        </a>
+        </Link>
       </div>
     </div>
   );
@@ -91,8 +68,8 @@ const AdminSidebar = () => {
 // MenuItem Component for cleaner code
 const MenuItem = ({ to, icon: Icon, label, isActive }) => {
   return (
-    <a
-      href={to}
+    <Link
+      to={to}
       className={`flex items-center px-4 py-3 mb-2 rounded-xl transition-all duration-200 group
         ${isActive 
           ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md' 
@@ -104,8 +81,8 @@ const MenuItem = ({ to, icon: Icon, label, isActive }) => {
       {isActive && (
         <div className="ml-auto bg-white bg-opacity-30 w-1.5 h-6 rounded-full"></div>
       )}
-    </a>
+    </Link>
   );
 };
 
-export default AdminSidebar;
+export default VoterSidebar;
