@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from 'axios';
+import React, { useState, useEffect } from "react";
 import { FaUsers, FaUserCheck, FaUserGraduate, FaChartBar, FaRegClock, FaAngleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Header from "./header";
@@ -6,7 +7,33 @@ import Header from "./header";
 const AdminDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({ title: "", logo: "" });
+  const [electionData, setElectionData] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('/election/status')
+        .then(response => {
+            setElectionData(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching election data', error);
+        });
+  }, []);
+
+  const handleStartElection = () => {
+    axios.post('/election/start', { election_id: modalData.id })
+        .then(response => {
+            alert(response.data.message);
+            // Update election status on frontend
+            setElectionData(prevState => ({
+                ...prevState,
+                status: 'Ongoing',
+            }));
+        })
+        .catch(error => {
+            console.error('Error starting election', error);
+        });
+  };
 
   // Example data for analytics
   const analyticsData = {
@@ -29,6 +56,17 @@ const AdminDashboard = () => {
   const handleOpenModal = (title, logo) => {
     setModalData({ title, logo });
     setIsModalOpen(true);
+    // Fetch election data based on title or ID
+    axios.get(`/election/status/${title}`)
+        .then(response => {
+            setModalData(prevState => ({
+                ...prevState,
+                ...response.data,
+            }));
+        })
+        .catch(error => {
+            console.error('Error fetching election data for modal', error);
+        });
   };
 
   const handleCloseModal = () => {

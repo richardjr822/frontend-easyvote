@@ -9,19 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('elections', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name'); // Election name
+            $table->text('description')->nullable(); // Election description
+            $table->string('image_url')->nullable(); // Election image URL
+            $table->enum('status', ['not started', 'ongoing', 'finished'])->default('not started'); // Election status
+            $table->integer('duration_hours')->nullable(); // Duration in hours
+            $table->enum('voters_type', ['all', 'bsit', 'bscs', 'bsemc'])->default('all'); // Eligible voters
+            $table->timestamps(); // Created and updated timestamps
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('elections');
     }
+
 };

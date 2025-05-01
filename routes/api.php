@@ -9,6 +9,7 @@ use App\Http\Controllers\VoterController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\ElectionController;
 
 Route::get('/test', function () {
     return response()->json(['message' => 'Hello from Laravel']);
@@ -62,3 +63,8 @@ Route::get('/amindasboard', function () {
 
 //Create
 Route::post('/candidates', [CandidateController::class, 'store']);
+
+//Manage Election
+Route::get('/election/status', [ElectionController::class, 'getStatus']);
+Route::post('/election/start', [ElectionController::class, 'startElection']);
+Route::post('/elections', [ElectionController::class, 'storeElection']);
